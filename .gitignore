@@ -17,3 +17,4 @@ htmlcov/
 # Database
 *.db
 pomodoro_log.txt
+cookies.txt

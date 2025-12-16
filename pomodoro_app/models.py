@@ -1,11 +1,16 @@
 """
 Database models for Pomodoro Timer application
 """
-from datetime import datetime
+from datetime import datetime, timezone
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
 db = SQLAlchemy()
+
+
+def get_utc_now():
+    """Get current UTC time in a timezone-aware manner"""
+    return datetime.now(timezone.utc)
 
 
 class User(UserMixin, db.Model):
@@ -16,7 +21,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)
     email = db.Column(db.String(120), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(128), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(datetime.UTC) if hasattr(datetime, 'UTC') else datetime.utcnow())
+    created_at = db.Column(db.DateTime, nullable=False, default=get_utc_now)
     
     # Relationship with sessions
     sessions = db.relationship('Session', backref='user', lazy=True, cascade='all, delete-orphan')
@@ -31,7 +36,7 @@ class Session(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
-    timestamp = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(datetime.UTC) if hasattr(datetime, 'UTC') else datetime.utcnow())
+    timestamp = db.Column(db.DateTime, nullable=False, default=get_utc_now)
     session_type = db.Column(db.String(20), nullable=False)  # work, short_break, long_break
     action = db.Column(db.String(20), nullable=False)  # completed, skipped
     session_number = db.Column(db.Integer, nullable=False)

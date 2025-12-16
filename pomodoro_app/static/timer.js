@@ -91,7 +91,9 @@ class PomodoroTimer {
         this.settingsBtn.addEventListener('click', () => this.showSettings());
         this.saveSettingsBtn.addEventListener('click', () => this.saveSettings());
         this.cancelSettingsBtn.addEventListener('click', () => this.hideSettings());
-        this.themeToggleBtn.addEventListener('click', () => this.toggleTheme());
+        if (this.themeToggleBtn) {
+            this.themeToggleBtn.addEventListener('click', () => this.toggleTheme());
+        }
     }
     
     getCurrentDuration() {
@@ -340,9 +342,11 @@ class PomodoroTimer {
     
     updateThemeIcon(theme) {
         // Update the theme toggle button icon
-        const themeIcon = this.themeToggleBtn.querySelector('.theme-icon');
-        if (themeIcon) {
-            themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
+        if (this.themeToggleBtn) {
+            const themeIcon = this.themeToggleBtn.querySelector('.theme-icon');
+            if (themeIcon) {
+                themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
+            }
         }
     }
 }

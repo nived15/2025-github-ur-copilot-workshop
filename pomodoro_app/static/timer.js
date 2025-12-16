@@ -23,6 +23,7 @@ class PomodoroTimer {
         // DOM elements
         this.initializeElements();
         this.loadSettings();
+        this.loadTheme();
         this.resetTimer();
         this.bindEvents();
     }
@@ -40,6 +41,7 @@ class PomodoroTimer {
         this.resetBtn = document.getElementById('reset-btn');
         this.skipBtn = document.getElementById('skip-btn');
         this.settingsBtn = document.getElementById('settings-btn');
+        this.themeToggleBtn = document.getElementById('theme-toggle-btn');
         
         // Settings panel
         this.settingsPanel = document.getElementById('settings-panel');
@@ -89,6 +91,7 @@ class PomodoroTimer {
         this.settingsBtn.addEventListener('click', () => this.showSettings());
         this.saveSettingsBtn.addEventListener('click', () => this.saveSettings());
         this.cancelSettingsBtn.addEventListener('click', () => this.hideSettings());
+        this.themeToggleBtn.addEventListener('click', () => this.toggleTheme());
     }
     
     getCurrentDuration() {
@@ -309,6 +312,38 @@ class PomodoroTimer {
     
     hideSettings() {
         this.settingsPanel.style.display = 'none';
+    }
+    
+    loadTheme() {
+        // Load theme preference from localStorage
+        const savedTheme = localStorage.getItem('pomodoroTheme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            this.updateThemeIcon('light');
+        } else {
+            document.body.classList.remove('dark-theme');
+            this.updateThemeIcon('dark');
+        }
+    }
+    
+    toggleTheme() {
+        // Toggle dark theme class on body
+        document.body.classList.toggle('dark-theme');
+        
+        // Save preference to localStorage
+        const isDark = document.body.classList.contains('dark-theme');
+        localStorage.setItem('pomodoroTheme', isDark ? 'dark' : 'light');
+        
+        // Update icon
+        this.updateThemeIcon(isDark ? 'light' : 'dark');
+    }
+    
+    updateThemeIcon(theme) {
+        // Update the theme toggle button icon
+        const themeIcon = this.themeToggleBtn.querySelector('.theme-icon');
+        if (themeIcon) {
+            themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
     }
 }
 

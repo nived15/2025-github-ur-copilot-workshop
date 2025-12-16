@@ -5,24 +5,61 @@
     box-sizing: border-box;
 }
 
+/* CSS Variables for Theming */
+:root {
+    /* Light Theme (Default) */
+    --bg-gradient-start: #667eea;
+    --bg-gradient-end: #764ba2;
+    --container-bg: #ffffff;
+    --text-primary: #4a5568;
+    --text-secondary: #718096;
+    --accent-color: #667eea;
+    --accent-hover: #5a67d8;
+    --border-color: #e2e8f0;
+    --btn-secondary-bg: #e2e8f0;
+    --btn-secondary-hover: #cbd5e0;
+    --settings-bg: #f7fafc;
+    --break-color: #48bb78;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body.dark-theme {
+    /* Dark Theme */
+    --bg-gradient-start: #1a202c;
+    --bg-gradient-end: #2d3748;
+    --container-bg: #2d3748;
+    --text-primary: #e2e8f0;
+    --text-secondary: #a0aec0;
+    --accent-color: #667eea;
+    --accent-hover: #5a67d8;
+    --border-color: #4a5568;
+    --btn-secondary-bg: #4a5568;
+    --btn-secondary-hover: #718096;
+    --settings-bg: #1a202c;
+    --break-color: #48bb78;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #333;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    color: var(--text-primary);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 .container {
-    background: white;
+    background: var(--container-bg);
     border-radius: 20px;
     padding: 2rem;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 40px var(--shadow-color);
     text-align: center;
     max-width: 400px;
     width: 90%;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Header Styles */
@@ -30,16 +67,51 @@ body {
     margin-bottom: 2rem;
 }
 
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
 .title {
     font-size: 2rem;
     font-weight: bold;
-    color: #4a5568;
+    color: var(--text-primary);
     margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
 }
 
 .subtitle {
-    color: #718096;
+    color: var(--text-secondary);
     font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: var(--btn-secondary-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+    background: var(--btn-secondary-hover);
+    transform: scale(1.1);
+}
+
+.theme-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
 }
 
 /* Session Info */
@@ -50,13 +122,15 @@ body {
 .session-type {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #667eea;
+    color: var(--accent-color);
     margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
 }
 
 .session-count {
-    color: #718096;
+    color: var(--text-secondary);
     font-size: 0.9rem;
+    transition: color 0.3s ease;
 }
 
 /* Timer Display */
@@ -67,7 +141,7 @@ body {
 .timer-circle {
     width: 200px;
     height: 200px;
-    border: 8px solid #e2e8f0;
+    border: 8px solid var(--border-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -78,11 +152,11 @@ body {
 }
 
 .timer-circle.active {
-    border-color: #667eea;
+    border-color: var(--accent-color);
 }
 
 .timer-circle.break {
-    border-color: #48bb78;
+    border-color: var(--break-color);
 }
 
 .timer-inner {
@@ -92,14 +166,16 @@ body {
 .time {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #4a5568;
+    color: var(--text-primary);
     font-family: 'Courier New', monospace;
+    transition: color 0.3s ease;
 }
 
 .status {
-    color: #718096;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     margin-top: 0.5rem;
+    transition: color 0.3s ease;
 }
 
 /* Control Buttons */
@@ -123,22 +199,23 @@ body {
 }
 
 .btn-primary {
-    background-color: #667eea;
+    background-color: var(--accent-color);
     color: white;
 }
 
 .btn-primary:hover {
-    background-color: #5a67d8;
+    background-color: var(--accent-hover);
     transform: translateY(-2px);
 }
 
 .btn-secondary {
-    background-color: #e2e8f0;
-    color: #4a5568;
+    background-color: var(--btn-secondary-bg);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
 }
 
 .btn-secondary:hover {
-    background-color: #cbd5e0;
+    background-color: var(--btn-secondary-hover);
     transform: translateY(-2px);
 }
 
@@ -150,17 +227,19 @@ body {
 
 /* Settings Panel */
 .settings-panel {
-    background-color: #f7fafc;
+    background-color: var(--settings-bg);
     border-radius: 10px;
     padding: 1.5rem;
     margin-bottom: 2rem;
     text-align: left;
+    transition: background-color 0.3s ease;
 }
 
 .settings-panel h3 {
-    color: #4a5568;
+    color: var(--text-primary);
     margin-bottom: 1rem;
     text-align: center;
+    transition: color 0.3s ease;
 }
 
 .setting-item {
@@ -175,22 +254,26 @@ body {
 
 .setting-item label {
     display: block;
-    color: #4a5568;
+    color: var(--text-primary);
     font-weight: 600;
     margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
 }
 
 .setting-item input {
     width: 100%;
     padding: 0.5rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-color);
     border-radius: 6px;
     font-size: 1rem;
+    background-color: var(--container-bg);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
 }
 
 .setting-item input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: var(--accent-color);
 }
 
 /* Progress Indicator */
@@ -208,16 +291,16 @@ body {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background-color: #e2e8f0;
+    background-color: var(--border-color);
     transition: background-color 0.3s ease;
 }
 
 .dot.active {
-    background-color: #667eea;
+    background-color: var(--accent-color);
 }
 
 .dot.completed {
-    background-color: #48bb78;
+    background-color: var(--break-color);
 }
 
 /* Responsive Design */
